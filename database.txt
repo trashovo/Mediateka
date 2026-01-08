@@ -1,0 +1,29 @@
+#данные хранятся формате: исполнитель; песня; альбом; год выпуска; время в секундах; кол-во прослушиваний
+Nirvana;Smells Like Teen Spirit;Nevermind;1991;301;3000000
+Nirvana;Come As You Are;Nevermind;1991;219;2200000
+Nirvana;Lithium;Nevermind;1991;257;1800000
+Nirvana;Heart-Shaped Box;In Utero;1993;281;1600000
+Nirvana;All Apologies;In Utero;1993;231;1500000
+Nirvana;About a Girl;Bleach;1989;168;1200000
+Nirvana;In Bloom;Nevermind;1991;255;1400000
+Nirvana;The Man Who Sold The World;MTV Unplugged;1994;261;1300000
+Korn;Blind;Korn;1994;259;2500000
+Korn;Freak on a Leash;Follow the Leader;1998;256;2800000
+Korn;Falling Away from Me;Issues;1999;271;2400000
+Korn;Here to Stay;Untouchables;2002;271;2200000
+Korn;Twisted Transistor;See You on the Other Side;2005;188;1800000
+Korn;Got the Life;Follow the Leader;1998;226;2000000
+Korn;Coming Undone;See You on the Other Side;2005;200;1600000
+Deftones;My Own Summer (Shove It);Around the Fur;1997;215;2700000
+Deftones;Change (In the House of Flies);White Pony;2000;299;3200000
+Deftones;Back to School (Mini Maggit);White Pony;2000;238;2400000
+Deftones;Minerva;Deftones;2003;258;2100000
+Deftones;Digital Bath;White Pony;2000;256;2300000
+Deftones;Be Quiet and Drive (Far Away);Around the Fur;1997;308;1900000
+Slipknot;Wait and Bleed;Slipknot;1999;147;3500000
+Slipknot;Duality;Vol. 3: The Subliminal Verses;2004;253;3300000
+Slipknot;Before I Forget;Vol. 3: The Subliminal Verses;2004;264;3100000
+Slipknot;Psychosocial;All Hope Is Gone;2008;283;2900000
+Slipknot;The Devil in I;.5: The Gray Chapter;2014;356;2200000
+Slipknot;Snuff;All Hope Is Gone;2008;276;2600000
+Slipknot;Custer;.5: The Gray Chapter;2014;254;1800000
