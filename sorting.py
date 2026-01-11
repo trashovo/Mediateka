@@ -33,11 +33,11 @@ def multi_key_sort(arr, keys):
         result = []
         for key_func, reverse in keys:
             value = key_func(item)
-            # ВАЖНО: проверяем тип перед применением минуса
             if reverse and isinstance(value, (int, float)):
-                result.append(-value)  # минус только для чисел
+                result.append(-value)
             else:
                 result.append(value)
         return result
+
 
     return quick_sort(arr, compare_func)
