@@ -29,15 +29,24 @@ def multi_key_sort(arr, keys):
     if not arr or not keys:
         return arr
 
-    def compare_func(item):
+        def compare_func(item):
         result = []
         for key_func, reverse in keys:
             value = key_func(item)
-            if reverse and isinstance(value, (int, float)):
-                result.append(-value)
-            else:
-                result.append(value)
+            if isinstance(value, (int, float)):
+                if reverse:
+                    result.append(-value)
+                else:
+                    result.append(value)
+
+            elif isinstance(value, str):
+                if reverse:
+                    inverted = ''.join(chr(0x10FFFF - ord(c)) for c in value)
+                    result.append(inverted)
+                else:
+                    result.append(value)
         return result
 
 
     return quick_sort(arr, compare_func)
+
