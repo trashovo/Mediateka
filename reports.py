@@ -138,14 +138,12 @@ def report_tracks_by_year_range(database):
                     print("\nНеверное значение\n")
                     continue
 
-    # Фильтруем по диапазону лет
     filtered_tracks = [track for track in database if n1 <= track[3] <= n2]
 
     if not filtered_tracks:
         print(f"\nВ период {n1}-{n2} записей не найдено\n")
         return []
 
-    # Сортируем: год(↓), исполнитель(↑)
     keys = [
         (lambda x: x[3], True),
         (lambda x: x[0], False)
@@ -158,3 +156,4 @@ def report_tracks_by_year_range(database):
         display_tracks(sorted_tracks, f"ОТЧЕТ 3: Аудиозаписи за {n1} год")
 
     return sorted_tracks
+
