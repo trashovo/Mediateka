@@ -133,7 +133,7 @@ def delete_track(database):
     print("=" * 50)
 
     for i, track in enumerate(database, 1):
-        print(f"{i:3d}. {track[0]} - {track[1]} ({track[3]})")
+        print(f"{i:3d}. {track[0]} - {track[1]}, Альбом: {track[2]} ({track[3]})")
     while True:
         try:
             choice = int(input(f"\nВведите номер записи для удаления (1-{len(database)} или 0 для отмены): "))
@@ -242,3 +242,4 @@ def edit_track(database):
 
         except ValueError:
             print("\nНеверное значение")
+
