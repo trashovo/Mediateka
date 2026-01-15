@@ -6,7 +6,7 @@ def read_database():
     try:
         with open(filename, 'r') as file:
             if len(file.read()) == 0:
-                print('База данных пуста')
+                print('База данных пуста, добавьте записи')
                 return database
             file.seek(0)
             for line_num, line in enumerate(file, 1):
@@ -37,13 +37,12 @@ def read_database():
         if len(database) > 0:
             print(f'Всего записей {len(database)}')
         if len(database) == 0:
-            print('Нету верных записей в базе данных')
+            print('Нету верных записей в базе данных, добавьте верные данные')
         return database
 
     except FileNotFoundError:
-        print(f"\nОшибка: файл '{filename}' не найден")
-        exit()
-
+        print(f"\nФайл '{filename}' не найден, начните добавлять данные, что бы создать файл")
+        return database
 def save_changes(database):
     filename = "database.txt"
     with open(filename, 'w', encoding='utf-8') as file:
@@ -148,10 +147,10 @@ def delete_track(database):
                 print("\nЗапись удалена\n")
                 return database
             else:
-                print("\nНеверный номер записи\n")
+                print("\nНеверный номер записи")
 
         except ValueError:
-            print("\nВведите число\n")
+            print("\nВведите число")
 
 
 def edit_track(database):
@@ -254,7 +253,7 @@ def edit_track(database):
                     track_to_edit[4] = new_duration
                 if new_plays_old == 0:
                     track_to_edit[5] = new_plays
-                    
+
                 save_changes(database)
                 print("\nЗапись успешно отредактирована\n")
                 return database
@@ -263,6 +262,5 @@ def edit_track(database):
 
         except ValueError:
             print("\nНеверное значение")
-
 
 
