@@ -262,5 +262,3 @@ def edit_track(database):
 
         except ValueError:
             print("\nНеверное значение")
-
-
