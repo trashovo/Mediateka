@@ -164,7 +164,7 @@ def edit_track(database):
     print("=" * 50)
 
     for i, track in enumerate(database, 1):
-        print(f"{i:3d}. {track[0]} - {track[1]}, Альбом: {track[2]} ({track[3]}) Длительность в секундах: {track[4]}, Прослушиваний: {track[5]}")
+        print(f"{i:3d}. {track[0]} - {track[1]}, Альбом: {track[2]} ({track[3]}) Длительность в секундах: {track[4]}, Прослушиваний {track[5]}")
     while True:
         try:
             choice = int(input(f"\nВведите номер записи для редактирования (1-{len(database)} или 0 для отмены): "))
@@ -190,34 +190,55 @@ def edit_track(database):
                 new_artist = input(f"Исполнитель [{track_to_edit[0]}]: ").strip()
                 new_title = input(f"Название трека [{track_to_edit[1]}]: ").strip()
                 new_album = input(f"Альбом [{track_to_edit[2]}]: ").strip()
-                new_year = None
-                while new_year is None:
+
+                check = False
+                while check is False:
+                    new_year = input(f"Год выпуска [{track_to_edit[3]}]: ").strip()
+                    if not new_year:
+                        new_year_old = 1
+                        check = True
+                        continue
                     try:
-                        year_input = int(input(f"Год выпуска [{track_to_edit[3]}]: "))
-                        if year_input <= 0:
+                        new_year = int(new_year)
+                        if new_year <= 0:
                             print("Год должен быть положительным числом")
-                        else:
-                            new_year = year_input
+                            continue
+                        new_year_old = 0
+                        check = True
                     except ValueError:
                         print("Неверное значение")
-                new_duration = None
-                while new_duration is None:
+
+                check = False
+                while check is False:
+                    new_duration = input(f"Длительность (сек) [{track_to_edit[4]}]: ").strip()
+                    if not new_duration:
+                        new_duration_old = 1
+                        check = True
+                        continue
                     try:
-                        duration_input = int(input(f"Длительность (сек) [{track_to_edit[4]}]: "))
-                        if duration_input <= 0:
-                            print("Год должен быть положительным числом")
-                        else:
-                            new_duration = duration_input
+                        new_duration = int(new_duration)
+                        if new_duration <= 0:
+                            print("Длительность должна быть положительным числом")
+                            continue
+                        new_duration_old = 0
+                        check = True
                     except ValueError:
                         print("Неверное значение")
-                new_plays = None
-                while new_plays is None:
+
+                check = False
+                while check is False:
+                    new_plays = input(f"Прослушиваний [{track_to_edit[5]}]: ").strip()
+                    if not new_plays:
+                        new_plays_old = 1
+                        check = True
+                        continue
                     try:
-                        plays_input = int(input(f"Год выпуска [{track_to_edit[3]}]: "))
-                        if plays_input <= 0:
-                            print("Год должен быть положительным числом")
-                        else:
-                            new_plays = plays_input
+                        new_plays = int(new_plays)
+                        if new_plays <= 0:
+                            print("Прослушиваний должно быть больше 0")
+                            continue
+                        new_plays_old = 0
+                        check = True
                     except ValueError:
                         print("Неверное значение")
 
@@ -227,13 +248,13 @@ def edit_track(database):
                     track_to_edit[1] = new_title
                 if new_album:
                     track_to_edit[2] = new_album
-                if new_year:
+                if new_year_old == 0:
                     track_to_edit[3] = new_year
-                if new_duration:
+                if new_duration_old == 0:
                     track_to_edit[4] = new_duration
-                if new_plays:
+                if new_plays_old == 0:
                     track_to_edit[5] = new_plays
-
+                    
                 save_changes(database)
                 print("\nЗапись успешно отредактирована\n")
                 return database
@@ -242,5 +263,6 @@ def edit_track(database):
 
         except ValueError:
             print("\nНеверное значение")
+
 
 
