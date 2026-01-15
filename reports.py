@@ -11,11 +11,6 @@ def format_duration(seconds):
 def display_tracks(tracks, title):
     """Отображение списка треков"""
     print(f"\n{title}\n")
-
-    if not tracks:
-        print("Записей не найдено")
-        return
-
     header = f"{'№':>3} {'Исполнитель':<20} {'Трек':<30} {'Альбом':<30} {'Год':>4} {'Длительность':>7} {'Прослушивания':>15}"
     print(header)
     print('-' * 120)
@@ -29,7 +24,9 @@ def display_tracks(tracks, title):
 
 def report_all_tracks_sorted(database):
     """Отчет 1: Все записи, отсортированные по исполнителю(↑), году(↓), прослушиваниям(↓)"""
-
+    if not database:
+        print('\nЗаписи отсутствуют, добавьте записи для работы\n')
+        return None
     keys = [
         (lambda x: x[0], False),
         (lambda x: x[3], True),
@@ -44,16 +41,16 @@ def report_all_tracks_sorted(database):
 
 def report_artist_tracks(database):
     """Отчет 2: Все записи конкретного исполнителя"""
+    if not database:
+        print('\nЗаписи отсутствуют, добавьте записи для работы\n')
+        return None
 
-    # Получаем уникальных исполнителей
     artists = {}
     for track in database:
         artist = track[0]
         if artist not in artists:
             artists[artist] = 0
         artists[artist] += 1
-
-    # Сортируем исполнителей по алфавиту
     sorted_artists = sorted(artists.items())
 
     print("\n" + "=" * 50)
@@ -84,7 +81,6 @@ def report_artist_tracks(database):
 
     artist_tracks = [track for track in database if track[0] == selected_artist]
 
-    # Сортируем: альбом(↓), название трека(↑)
     keys = [
         (lambda x: x[2], True),
         (lambda x: x[1], False)
@@ -98,8 +94,10 @@ def report_artist_tracks(database):
 
 def report_tracks_by_year_range(database):
     """Отчет 3: Записи в диапазоне лет"""
+    if not database:
+        print('\nЗаписи отсутствуют, добавьте записи для работы\n')
+        return None
 
-    # Находим минимальный и максимальный годы
     years = [track[3] for track in database]
     min_year = min(years)
     max_year = max(years)
