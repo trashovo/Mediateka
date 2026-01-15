@@ -22,16 +22,3 @@ def get_user_choice():
         except ValueError:
             print("\nНеверное значение")
 
-def choice_database():
-    print("Выберите базу данных:")
-    print("1. Использовать готовую базу данных")
-    print("2. Создать новую пустую базу данных для теста")
-    while True:
-        try:
-            choice_d = int(input("Ваш выбор (1-2): "))
-            if choice_d >= 1 and choice_d <= 2:
-                return choice_d
-            else:
-                print("Введите 1 или 2")
-        except ValueError:
-            print("\n Неверное значение\n")
