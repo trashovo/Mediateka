@@ -18,7 +18,6 @@ def get_user_choice():
             if 0 <= choice <= 6:
                 return choice
             else:
-                print("\nЧисло должно быть в диапазоне (0-3)\n")
+                print("\nЧисло должно быть в диапазоне (0-6)\n")
         except ValueError:
             print("\nНеверное значение")
-
