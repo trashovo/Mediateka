@@ -1,11 +1,13 @@
 def read_database():
     """Чтение базы данных из файла"""
+
     filename = "database.txt"
     database = []
     try:
         with open(filename, 'r') as file:
             if len(file.read()) == 0:
                 print('База данных пуста')
+                return database
             file.seek(0)
             for line_num, line in enumerate(file, 1):
                 line = line.strip()
@@ -40,7 +42,7 @@ def read_database():
 
     except FileNotFoundError:
         print(f"\nОшибка: файл '{filename}' не найден")
-        return None
+        exit()
 
 def save_changes(database):
     filename = "database.txt"
@@ -240,8 +242,3 @@ def edit_track(database):
 
         except ValueError:
             print("\nНеверное значение")
-
-
-
-
-
