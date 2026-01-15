@@ -1,27 +1,50 @@
 def quick_sort(arr, key_func, reverse=False):
-    """Быстрая сортировка (метод Хоара)."""
+    """Быстрая сортировка методом Хоара"""
+
+    def partition(left, right):
+        """Разделение массива относительно опорного элемента"""
+        pivot_index = (left + right) // 2
+        pivot_key = key_func(arr[pivot_index])
+
+        i = left - 1
+        j = right + 1
+
+        while True:
+            while True:
+                i += 1
+                if reverse:
+                    if key_func(arr[i]) <= pivot_key:
+                        break
+                else:
+                    if key_func(arr[i]) >= pivot_key:
+                        break
+
+            while True:
+                j -= 1
+                if reverse:
+                    if key_func(arr[j]) >= pivot_key:
+                        break
+                else:
+                    if key_func(arr[j]) <= pivot_key:
+                        break
+
+            if i >= j:
+                return j
+
+            arr[i], arr[j] = arr[j], arr[i]
+
+    def _quick_sort(left, right):
+        if left < right:
+            p = partition(left, right)
+
+            _quick_sort(left, p)
+            _quick_sort(p + 1, right)
+
     if len(arr) <= 1:
         return arr
 
-    pivot_index = len(arr) // 2
-    pivot = arr[pivot_index]
-    pivot_key = key_func(pivot)
-
-    left = []
-    middle = []
-    right = []
-
-    for item in arr:
-        item_key = key_func(item)
-
-        if item_key == pivot_key:
-            middle.append(item)
-        elif (reverse and item_key > pivot_key) or (not reverse and item_key < pivot_key):
-            left.append(item)
-        else:
-            right.append(item)
-
-    return quick_sort(left, key_func, reverse) + middle + quick_sort(right, key_func, reverse)
+    _quick_sort(0, len(arr) - 1)
+    return arr
 
 
 def multi_key_sort(arr, keys):
@@ -33,11 +56,18 @@ def multi_key_sort(arr, keys):
         result = []
         for key_func, reverse in keys:
             value = key_func(item)
-            # ВАЖНО: проверяем тип перед применением минуса
-            if reverse and isinstance(value, (int, float)):
-                result.append(-value)  # минус только для чисел
-            else:
-                result.append(value)
+            if isinstance(value, (int, float)):
+                if reverse:
+                    result.append(-value)
+                else:
+                    result.append(value)
+
+            elif isinstance(value, str):
+                if reverse:
+                    inverted = ''.join(chr(0x10FFFF - ord(c)) for c in value)
+                    result.append(inverted)
+                else:
+                    result.append(value)
         return result
 
     return quick_sort(arr, compare_func)
