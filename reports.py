@@ -156,4 +156,3 @@ def report_tracks_by_year_range(database):
         display_tracks(sorted_tracks, f"ОТЧЕТ 3: Аудиозаписи за {n1} год")
 
     return sorted_tracks
-
