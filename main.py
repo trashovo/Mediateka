@@ -1,12 +1,8 @@
-from file_operations import read_database
+from file_operations import read_database, add_track, delete_track, edit_track
 from reports import report_all_tracks_sorted, report_artist_tracks, report_tracks_by_year_range
 from menu import display_main_menu, get_user_choice
 
-
 database = read_database()
-
-if not database:
-    exit()
 
 print("=" * 60)
 print("МЕДИАТЕКА")
@@ -24,6 +20,15 @@ while True:
 
     elif choice == 3:
         report_tracks_by_year_range(database)
+
+    elif choice == 4:
+        database = add_track(database)
+
+    elif choice == 5:
+        database = edit_track(database)
+
+    elif choice == 6:
+        database = delete_track(database)
 
     elif choice == 0:
         print("\nВыход из программы")
