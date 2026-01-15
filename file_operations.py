@@ -1,10 +1,12 @@
 def read_database():
     """Чтение базы данных из файла"""
+    filename = "database.txt"
     database = []
-    filename= "database.txt"
-
     try:
         with open(filename, 'r') as file:
+            if len(file.read()) == 0:
+                print('База данных пуста')
+            file.seek(0)
             for line_num, line in enumerate(file, 1):
                 line = line.strip()
                 if not line or line.startswith('#'):
@@ -39,3 +41,207 @@ def read_database():
     except FileNotFoundError:
         print(f"\nОшибка: файл '{filename}' не найден")
         return None
+
+def save_changes(database):
+    filename = "database.txt"
+    with open(filename, 'w', encoding='utf-8') as file:
+        file.write('#данные хранятся в формате: исполнитель;песня;альбом;год выпуска;время в секундах;кол-во прослушиваний\n')
+        for track in database:
+            line = ";".join(str(item) for item in track)
+            file.write(line + "\n")
+
+def add_track(database):
+    """Добавление новой аудиозаписи"""
+    print("\n" + "=" * 50)
+    print("ДОБАВЛЕНИЕ НОВОЙ АУДИОЗАПИСИ")
+    print("=" * 50)
+
+    artist = None
+    while artist is None:
+        artist_input = input("Исполнитель: ").strip()
+        if not artist_input:
+            print("Исполнитель не может быть пустым")
+        else:
+            artist = artist_input
+
+    title = None
+    while title is None:
+        title_input = input("Название трека: ").strip()
+        if not title_input:
+            print("Название трека не может быть пустым")
+        else:
+            title = title_input
+
+    album = None
+    while album is None:
+        album_input = input("Альбом: ").strip()
+        if not album_input:
+            print("Альбом не может быть пустым")
+        else:
+            album = album_input
+
+    year = None
+    while year is None:
+        try:
+            year_input = int(input("Год выпуска: "))
+            if year_input <= 0:
+                print("Год должен быть положительным числом")
+            else:
+                year = year_input
+        except ValueError:
+            print("Неверное значение")
+
+    duration = None
+    while duration is None:
+        try:
+            duration_input = int(input("Длительность в секундах: "))
+            if duration_input <= 0:
+                print("Длительность должна быть положительным числом")
+            else:
+                duration = duration_input
+        except ValueError:
+            print("Неверное значение")
+
+    plays = None
+    while plays is None:
+        try:
+            plays_input = int(input("Количество прослушиваний: "))
+            if plays_input < 0:
+                print("Количество прослушиваний не может быть отрицательным")
+            else:
+                plays = plays_input
+        except ValueError:
+            print("Неверное значение")
+
+    new_track = [artist, title, album, year, duration, plays]
+    database.append(new_track)
+    save_changes(database)
+    print("\nЗапись добавлена\n")
+
+    return database
+
+
+def delete_track(database):
+    """Удаление аудиозаписи"""
+    if len(database) == 0:
+        print("\nНету записей для удаления\n")
+        return database
+    print("\n" + "=" * 50)
+    print("УДАЛЕНИЕ АУДИОЗАПИСИ")
+    print("=" * 50)
+
+    for i, track in enumerate(database, 1):
+        print(f"{i:3d}. {track[0]} - {track[1]} ({track[3]})")
+    while True:
+        try:
+            choice = int(input(f"\nВведите номер записи для удаления (1-{len(database)} или 0 для отмены): "))
+
+            if choice == 0:
+                print("\nОтмена удаления\n")
+                return database
+
+            if 1 <= choice <= len(database):
+                del database[choice - 1]
+                save_changes(database)
+                print("\nЗапись удалена\n")
+                return database
+            else:
+                print("\nНеверный номер записи\n")
+
+        except ValueError:
+            print("\nВведите число\n")
+
+
+def edit_track(database):
+    """Редактирование существующей аудиозаписи"""
+    if len(database) == 0:
+        print("\nНету записей для редактирования\n")
+        return database
+    print("\n" + "=" * 50)
+    print("РЕДАКТИРОВАНИЕ АУДИОЗАПИСИ")
+    print("=" * 50)
+
+    for i, track in enumerate(database, 1):
+        print(f"{i:3d}. {track[0]} - {track[1]}, Альбом: {track[2]} ({track[3]})")
+    while True:
+        try:
+            choice = int(input(f"\nВведите номер записи для редактирования (1-{len(database)} или 0 для отмены): "))
+
+            if choice == 0:
+                print("\nОтмена редактирования\n")
+                return database
+
+            if 1 <= choice <= len(database):
+                track_to_edit = database[choice - 1]
+
+                print(f"\nРедактирование записи:")
+                print(f"Текущие значения:")
+                print(f"Исполнитель: {track_to_edit[0]}")
+                print(f"Название трека: {track_to_edit[1]}")
+                print(f"Альбом: {track_to_edit[2]}")
+                print(f"Год выпуска: {track_to_edit[3]}")
+                print(f"Длительность (сек): {track_to_edit[4]}")
+                print(f"Прослушиваний: {track_to_edit[5]}")
+
+                print("\nВведите новые значения (оставьте пустым, чтобы не менять):")
+
+                new_artist = input(f"Исполнитель [{track_to_edit[0]}]: ").strip()
+                new_title = input(f"Название трека [{track_to_edit[1]}]: ").strip()
+                new_album = input(f"Альбом [{track_to_edit[2]}]: ").strip()
+                new_year = None
+                while new_year is None:
+                    try:
+                        year_input = int(input(f"Год выпуска [{track_to_edit[3]}]: "))
+                        if year_input <= 0:
+                            print("Год должен быть положительным числом")
+                        else:
+                            new_year = year_input
+                    except ValueError:
+                        print("Неверное значение")
+                new_duration = None
+                while new_duration is None:
+                    try:
+                        duration_input = int(input(f"Длительность (сек) [{track_to_edit[4]}]: "))
+                        if duration_input <= 0:
+                            print("Год должен быть положительным числом")
+                        else:
+                            new_duration = duration_input
+                    except ValueError:
+                        print("Неверное значение")
+                new_plays = None
+                while new_plays is None:
+                    try:
+                        plays_input = int(input(f"Год выпуска [{track_to_edit[3]}]: "))
+                        if plays_input <= 0:
+                            print("Год должен быть положительным числом")
+                        else:
+                            new_plays = plays_input
+                    except ValueError:
+                        print("Неверное значение")
+
+                if new_artist:
+                    track_to_edit[0] = new_artist
+                if new_title:
+                    track_to_edit[1] = new_title
+                if new_album:
+                    track_to_edit[2] = new_album
+                if new_year:
+                    track_to_edit[3] = new_year
+                if new_duration:
+                    track_to_edit[4] = new_duration
+                if new_plays:
+                    track_to_edit[5] = new_plays
+
+                save_changes(database)
+                print("\nЗапись успешно отредактирована\n")
+                return database
+            else:
+                print("\nНеверный номер записи")
+
+        except ValueError:
+            print("\nНеверное значение")
+
+
+
+
+
